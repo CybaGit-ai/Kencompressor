@@ -1,0 +1,162 @@
+from __future__ import annotations
+
+from datetime import datetime
+from uuid import uuid4
+
+from sqlmodel import Session
+
+from backend.models import Agent, Listing
+
+
+def seed_data(session: Session) -> None:
+    if session.query(Agent).first():
+        return
+
+    agents = [
+        Agent(id=uuid4(), name="Alex Morgan", phone="604-555-1234", email="alex@example.com", brokerage="Fraser Realty"),
+        Agent(id=uuid4(), name="Priya Singh", phone="604-555-2345", email="priya@example.com", brokerage="Valley Homes"),
+        Agent(id=uuid4(), name="Liam Chen", phone="604-555-3456", email="liam@example.com", brokerage="West Coast Estates"),
+    ]
+    session.add_all(agents)
+    session.commit()
+
+    listings = [
+        Listing(
+            address="123 Maple St",
+            city="Abbotsford",
+            region="Fraser Valley",
+            lat=49.0505,
+            lon=-122.3045,
+            price=899000,
+            beds=4,
+            baths=3,
+            sqft=2100,
+            lot_sqft=7200,
+            property_type="House",
+            status="ACTIVE",
+            agent_id=agents[0].id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        ),
+        Listing(
+            address="45 Creekside Ave",
+            city="Chilliwack",
+            region="Fraser Valley",
+            lat=49.1575,
+            lon=-121.9515,
+            price=749000,
+            beds=3,
+            baths=2,
+            sqft=1800,
+            lot_sqft=5000,
+            property_type="House",
+            status="ACTIVE",
+            agent_id=agents[1].id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        ),
+        Listing(
+            address="9 Cedar Ridge",
+            city="Mission",
+            region="Fraser Valley",
+            lat=49.1325,
+            lon=-122.311,
+            price=825000,
+            beds=4,
+            baths=3.5,
+            sqft=2400,
+            lot_sqft=8000,
+            property_type="House",
+            status="ACTIVE",
+            agent_id=agents[2].id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        ),
+        Listing(
+            address="78 Parkside Dr",
+            city="Abbotsford",
+            region="Fraser Valley",
+            lat=49.052,
+            lon=-122.29,
+            price=669000,
+            beds=2,
+            baths=2,
+            sqft=1250,
+            lot_sqft=None,
+            property_type="Condo",
+            status="ACTIVE",
+            agent_id=agents[0].id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        ),
+        Listing(
+            address="12 Valleyview Rd",
+            city="Chilliwack",
+            region="Fraser Valley",
+            lat=49.16,
+            lon=-122.0,
+            price=715000,
+            beds=3,
+            baths=2.5,
+            sqft=1750,
+            lot_sqft=4600,
+            property_type="Townhouse",
+            status="ACTIVE",
+            agent_id=agents[1].id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        ),
+        Listing(
+            address="34 Riverbend Way",
+            city="Mission",
+            region="Fraser Valley",
+            lat=49.13,
+            lon=-122.33,
+            price=789000,
+            beds=4,
+            baths=3,
+            sqft=2200,
+            lot_sqft=7000,
+            property_type="House",
+            status="ACTIVE",
+            agent_id=agents[2].id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        ),
+        Listing(
+            address="201-8800 King Rd",
+            city="Abbotsford",
+            region="Fraser Valley",
+            lat=49.048,
+            lon=-122.30,
+            price=520000,
+            beds=2,
+            baths=1.5,
+            sqft=980,
+            lot_sqft=None,
+            property_type="Condo",
+            status="ACTIVE",
+            agent_id=agents[0].id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        ),
+        Listing(
+            address="502 Mountainview Ln",
+            city="Chilliwack",
+            region="Fraser Valley",
+            lat=49.165,
+            lon=-121.95,
+            price=955000,
+            beds=5,
+            baths=3.5,
+            sqft=2800,
+            lot_sqft=9000,
+            property_type="House",
+            status="ACTIVE",
+            agent_id=agents[1].id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+        ),
+    ]
+    session.add_all(listings)
+    session.commit()
